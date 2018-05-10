@@ -1,0 +1,15 @@
+    private extractPostData(response: Response): string {
+      return response.text();
+    }
+
+    private observableError(error: Response | any): ErrorObservable {
+      return Observable.throw(error.message || error);
+    }
+
+ private postDataService(url: string, params: any): Observable<any[]> {
+      // console.log(url + '--------------------------postfromFetch');
+      const body = JSON.stringify(params);
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      return this.http.post(url, body, { headers: headers }).map(this.extractPostData).catch(this.observableError);
+    }
